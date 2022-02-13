@@ -1,0 +1,81 @@
+{% extends 'posts/base.html' %}
+{% block page_title %}
+{% if form.instance.pk %}
+Update {{form.instance.title}}
+{% else %}
+Add New Post
+{% endif %}
+{% endblock page_title %}
+{% block page_links_top %}{% endblock page_links_top %}
+{% block page_styles %}
+<style>
+    input, textarea{
+        display: block;
+    }
+    input[type="text"], textarea{
+        width: 100%;
+        padding: 5px;
+        outline: none;
+    }
+    input[type="text"]{
+        border: none;
+        border-bottom: 2px solid gray;
+    }
+    textarea{
+        border: 2px solid gray;
+    }
+</style>
+{% endblock page_styles %}
+{% block page_scripts_top %}{% endblock page_scripts_top %}
+
+{% block page_content %}
+<form method="POST" class="shadow w-lg-75 w-100 m-auto rounded-top p-3">
+    {% if form.instance.pk %}
+    <h4>
+        Update {{form.instance.title}} 
+        <span class="float-end">
+            <a href="{% url 'posts:delete-post' post.slug %}" class="text-decoration-none">
+                <i class="fa fa-trash"></i>
+            </a>
+        </span>
+    </h4>
+    {% else %}
+    <h4>Add New Post</h4>
+    {% endif %}
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Save" class="btn btn-primary m-auto d-block">
+</form>
+{% endblock page_content %}
+
+{% block page_links_bottom %}{% endblock page_links_bottom %}
+{% block page_scripts_bottom %}
+<script>
+    tinymce.init({
+      selector: 'textarea',
+      height: 800,
+      plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter permanentpen pageembed charmap tinycomments mentions quickbars linkchecker emoticons advtable export',
+      mobile: {
+        plugins: 'print preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen image link media mediaembed template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker textpattern noneditable help formatpainter pageembed charmap mentions quickbars linkchecker emoticons advtable'
+      },
+      menu: {
+        tc: {
+          title: 'Comments',
+          items: 'addcomment showcomments deleteallconversations'
+        }
+      },
+      menubar: 'file edit view insert format tools table tc help',
+      toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+      image_caption: true,
+      quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
+      noneditable_noneditable_class: 'mceNonEditable',
+      toolbar_mode: 'sliding',
+      spellchecker_ignore_list: ['Ephox', 'Moxiecode'],
+      tinycomments_mode: 'embedded',
+      content_style: '.mymention{ color: gray; }',
+      contextmenu: 'link image table configurepermanentpen',
+      a11y_advanced_options: true,
+    });
+
+</script>
+{% endblock page_scripts_bottom %}

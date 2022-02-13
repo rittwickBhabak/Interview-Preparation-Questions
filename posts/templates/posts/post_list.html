@@ -1,0 +1,28 @@
+{% extends 'posts/base.html' %}
+{% block page_title %}All Posts{% endblock page_title %}
+{% block page_links_top %}{% endblock page_links_top %}
+{% block page_styles %}{% endblock page_styles %}
+{% block page_scripts_top %}{% endblock page_scripts_top %}
+
+{% block page_content %}
+{% for post in post_list %}
+<div class="mb-3 shadow-sm p-3">
+    <h4>{{post.title}}</h4>
+    <div class="d-block">
+        {% for tag in post.tags.all %}
+        <span class="mx-1">
+            <a href="{% url 'posts:tag' tag %}">
+                {{tag}}
+            </a>
+        </span>
+        {% endfor %}
+    </div>
+    <p class="lead">{{post.description|truncatewords:10|safe}}</p>
+    <a href="{% url 'posts:view-post' post.slug %}" class="btn btn-primary">Read More</a>
+    <a href="{% url 'posts:edit-post' post.slug %}" class="mx-1">Update</a>
+</div>
+{% endfor %}
+{% endblock page_content %}
+
+{% block page_links_bottom %}{% endblock page_links_bottom %}
+{% block page_scripts_bottom %}{% endblock page_scripts_bottom %}

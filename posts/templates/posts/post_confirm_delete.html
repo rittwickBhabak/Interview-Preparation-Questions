@@ -1,0 +1,22 @@
+{% extends 'posts/base.html' %}
+{% block page_title %}Confirm Delete {{post.title}}{% endblock page_title %}
+{% block page_links_top %}{% endblock page_links_top %}
+{% block page_styles %}{% endblock page_styles %}
+{% block page_scripts_top %}{% endblock page_scripts_top %}
+
+{% block page_content %}
+
+<form class="w-75 m-auto shadow rounded p-3" method='POST'>
+
+    <h4>Confirm Delete {{post.title}}</h4>
+        
+    {{form}}
+    {% csrf_token %}
+    <input type="submit" value="Confirm Delete" class="btn btn-danger">
+    <a href="{% url 'posts:view-post' post.slug %}">Cancel</a>
+</form>
+
+{% endblock page_content %}
+
+{% block page_links_bottom %}{% endblock page_links_bottom %}
+{% block page_scripts_bottom %}{% endblock page_scripts_bottom %}
